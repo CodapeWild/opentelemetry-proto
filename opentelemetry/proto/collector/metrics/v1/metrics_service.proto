@@ -18,7 +18,7 @@ package opentelemetry.proto.collector.metrics.v1;
 
 import "opentelemetry/proto/metrics/v1/metrics.proto";
 
-option go_package = "github.com/CodapeWild/dktrace-idl/opentelemetry-gen-go/collector/metrics/v1";
+option go_package = "opentelemetry-gen-go/collector/metrics/v1";
 
 // Service that can be used to push metrics between one Application
 // instrumented with OpenTelemetry and a collector, or between a collector and a
