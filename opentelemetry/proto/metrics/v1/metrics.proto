@@ -19,11 +19,7 @@ package opentelemetry.proto.metrics.v1;
 import "opentelemetry/proto/common/v1/common.proto";
 import "opentelemetry/proto/resource/v1/resource.proto";
 
-option csharp_namespace = "OpenTelemetry.Proto.Metrics.V1";
-option java_multiple_files = true;
-option java_package = "io.opentelemetry.proto.metrics.v1";
-option java_outer_classname = "MetricsProto";
-option go_package = "go.opentelemetry.io/proto/otlp/metrics/v1";
+option go_package = "github.com/CodapeWild/dktrace-idl/opentelemetry-gen-go/metrics/v1";
 
 // MetricsData represents the metrics data that can be stored in a persistent
 // storage, OR can be embedded by other protocols that transfer OTLP metrics
@@ -55,8 +51,9 @@ message ResourceMetrics {
   // A list of metrics that originate from a resource.
   repeated ScopeMetrics scope_metrics = 2;
 
-  // This schema_url applies to the data in the "resource" field. It does not apply
-  // to the data in the "scope_metrics" field which have their own schema_url field.
+  // This schema_url applies to the data in the "resource" field. It does not
+  // apply to the data in the "scope_metrics" field which have their own
+  // schema_url field.
   string schema_url = 3;
 }
 
@@ -88,7 +85,8 @@ message ScopeMetrics {
 // - Metric is composed of a metadata and data.
 // - Metadata part contains a name, description, unit.
 // - Data is one of the possible types (Sum, Gauge, Histogram, Summary).
-// - DataPoint contains timestamps, attributes, and one of the possible value type
+// - DataPoint contains timestamps, attributes, and one of the possible value
+// type
 //   fields.
 //
 //     Metric
@@ -220,8 +218,9 @@ message Histogram {
   AggregationTemporality aggregation_temporality = 2;
 }
 
-// ExponentialHistogram represents the type of a metric that is calculated by aggregating
-// as a ExponentialHistogram of all reported double measurements over a time interval.
+// ExponentialHistogram represents the type of a metric that is calculated by
+// aggregating as a ExponentialHistogram of all reported double measurements
+// over a time interval.
 message ExponentialHistogram {
   repeated ExponentialHistogramDataPoint data_points = 1;
 
@@ -232,7 +231,8 @@ message ExponentialHistogram {
 
 // Summary metric data are used to convey quantile summaries,
 // a Prometheus (see: https://prometheus.io/docs/concepts/metric_types/#summary)
-// and OpenMetrics (see: https://github.com/OpenObservability/OpenMetrics/blob/4dbf6075567ab43296eed941037c12951faafb92/protos/prometheus.proto#L45)
+// and OpenMetrics (see:
+// https://github.com/OpenObservability/OpenMetrics/blob/4dbf6075567ab43296eed941037c12951faafb92/protos/prometheus.proto#L45)
 // data type. These data points cannot always be merged in a meaningful way.
 // While they can be useful in some applications, histogram data points are
 // recommended for new applications.
@@ -413,7 +413,8 @@ message HistogramDataPoint {
   // events, and is assumed to be monotonic over the values of these events.
   // Negative events *can* be recorded, but sum should not be filled out when
   // doing so.  This is specifically to enforce compatibility w/ OpenMetrics,
-  // see: https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md#histogram
+  // see:
+  // https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md#histogram
   optional double sum = 5;
 
   // bucket_counts is an optional field contains the count values of histogram
@@ -425,13 +426,15 @@ message HistogramDataPoint {
   // the number of elements in explicit_bounds array.
   repeated fixed64 bucket_counts = 6;
 
-  // explicit_bounds specifies buckets with explicitly defined bounds for values.
+  // explicit_bounds specifies buckets with explicitly defined bounds for
+  // values.
   //
   // The boundaries for bucket at index i are:
   //
   // (-infinity, explicit_bounds[i]] for i == 0
-  // (explicit_bounds[i-1], explicit_bounds[i]] for 0 < i < size(explicit_bounds)
-  // (explicit_bounds[i-1], +infinity) for i == size(explicit_bounds)
+  // (explicit_bounds[i-1], explicit_bounds[i]] for 0 < i <
+  // size(explicit_bounds) (explicit_bounds[i-1], +infinity) for i ==
+  // size(explicit_bounds)
   //
   // The values in the explicit_bounds array must be strictly increasing.
   //
@@ -455,10 +458,11 @@ message HistogramDataPoint {
   optional double max = 12;
 }
 
-// ExponentialHistogramDataPoint is a single data point in a timeseries that describes the
-// time-varying values of a ExponentialHistogram of double values. A ExponentialHistogram contains
-// summary statistics for a population of values, it may optionally contain the
-// distribution of those values across a set of buckets.
+// ExponentialHistogramDataPoint is a single data point in a timeseries that
+// describes the time-varying values of a ExponentialHistogram of double values.
+// A ExponentialHistogram contains summary statistics for a population of
+// values, it may optionally contain the distribution of those values across a
+// set of buckets.
 //
 message ExponentialHistogramDataPoint {
   // The set of key/value pairs that uniquely identify the timeseries from
@@ -492,9 +496,10 @@ message ExponentialHistogramDataPoint {
   // events, and is assumed to be monotonic over the values of these events.
   // Negative events *can* be recorded, but sum should not be filled out when
   // doing so.  This is specifically to enforce compatibility w/ OpenMetrics,
-  // see: https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md#histogram
+  // see:
+  // https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md#histogram
   optional double sum = 5;
-  
+
   // scale describes the resolution of the histogram.  Boundaries are
   // located at powers of the base, where:
   //
@@ -532,7 +537,7 @@ message ExponentialHistogramDataPoint {
   // of counts.
   message Buckets {
     // Offset is the bucket index of the first entry in the bucket_counts array.
-    // 
+    //
     // Note: This uses a varint encoding as a simple form of compression.
     sint32 offset = 1;
 
@@ -546,7 +551,7 @@ message ExponentialHistogramDataPoint {
     // especially zeros, so uint64 has been selected to ensure
     // varint encoding.
     repeated uint64 bucket_counts = 2;
-  } 
+  }
 
   // Flags that apply to this specific data point.  See DataPointFlags
   // for the available flags and their meaning.
@@ -597,7 +602,8 @@ message SummaryDataPoint {
   // events, and is assumed to be monotonic over the values of these events.
   // Negative events *can* be recorded, but sum should not be filled out when
   // doing so.  This is specifically to enforce compatibility w/ OpenMetrics,
-  // see: https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md#summary
+  // see:
+  // https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md#summary
   double sum = 5;
 
   // Represents the value at a given quantile of a distribution.
@@ -619,8 +625,9 @@ message SummaryDataPoint {
     double value = 2;
   }
 
-  // (Optional) list of values at different quantiles of the distribution calculated
-  // from the current snapshot. The quantiles must be strictly increasing.
+  // (Optional) list of values at different quantiles of the distribution
+  // calculated from the current snapshot. The quantiles must be strictly
+  // increasing.
   repeated ValueAtQuantile quantile_values = 6;
 
   // Flags that apply to this specific data point.  See DataPointFlags

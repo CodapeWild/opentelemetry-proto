@@ -18,11 +18,7 @@ package opentelemetry.proto.collector.metrics.v1;
 
 import "opentelemetry/proto/metrics/v1/metrics.proto";
 
-option csharp_namespace = "OpenTelemetry.Proto.Collector.Metrics.V1";
-option java_multiple_files = true;
-option java_package = "io.opentelemetry.proto.collector.metrics.v1";
-option java_outer_classname = "MetricsServiceProto";
-option go_package = "go.opentelemetry.io/proto/otlp/collector/metrics/v1";
+option go_package = "github.com/CodapeWild/dktrace-idl/opentelemetry-gen-go/collector/metrics/v1";
 
 // Service that can be used to push metrics between one Application
 // instrumented with OpenTelemetry and a collector, or between a collector and a
@@ -30,15 +26,17 @@ option go_package = "go.opentelemetry.io/proto/otlp/collector/metrics/v1";
 service MetricsService {
   // For performance reasons, it is recommended to keep this RPC
   // alive for the entire life of the application.
-  rpc Export(ExportMetricsServiceRequest) returns (ExportMetricsServiceResponse) {}
+  rpc Export(ExportMetricsServiceRequest)
+      returns (ExportMetricsServiceResponse) {}
 }
 
 message ExportMetricsServiceRequest {
   // An array of ResourceMetrics.
-  // For data coming from a single resource this array will typically contain one
-  // element. Intermediary nodes (such as OpenTelemetry Collector) that receive
-  // data from multiple origins typically batch the data before forwarding further and
-  // in that case this array will contain multiple elements.
+  // For data coming from a single resource this array will typically contain
+  // one element. Intermediary nodes (such as OpenTelemetry Collector) that
+  // receive data from multiple origins typically batch the data before
+  // forwarding further and in that case this array will contain multiple
+  // elements.
   repeated opentelemetry.proto.metrics.v1.ResourceMetrics resource_metrics = 1;
 }
 
@@ -69,9 +67,9 @@ message ExportMetricsPartialSuccess {
   int64 rejected_data_points = 1;
 
   // A developer-facing human-readable message in English. It should be used
-  // either to explain why the server rejected parts of the data during a partial
-  // success or to convey warnings/suggestions during a full success. The message
-  // should offer guidance on how users can address such issues.
+  // either to explain why the server rejected parts of the data during a
+  // partial success or to convey warnings/suggestions during a full success.
+  // The message should offer guidance on how users can address such issues.
   //
   // error_message is an optional field. An error_message with an empty value
   // is equivalent to it not being set.
