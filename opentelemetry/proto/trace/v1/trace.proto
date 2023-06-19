@@ -19,7 +19,7 @@ package opentelemetry.proto.trace.v1;
 import "opentelemetry/proto/common/v1/common.proto";
 import "opentelemetry/proto/resource/v1/resource.proto";
 
-option go_package = "github.com/CodapeWild/dktrace-idl/opentelemetry-gen-go/trace/v1";
+option go_package = "github.com/GuanceCloud/tracing-protos/opentelemetry-gen-go/trace/v1";
 
 // TracesData represents the traces data that can be stored in a persistent
 // storage, OR can be embedded by other protocols that transfer OTLP traces

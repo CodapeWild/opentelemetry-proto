@@ -18,7 +18,7 @@ package opentelemetry.proto.resource.v1;
 
 import "opentelemetry/proto/common/v1/common.proto";
 
-option go_package = "github.com/CodapeWild/dktrace-idl/opentelemetry-gen-go/resource/v1";
+option go_package = "github.com/GuanceCloud/tracing-protos/opentelemetry-gen-go/resource/v1";
 
 // Resource information.
 message Resource {
